@@ -30,7 +30,7 @@ A simple token can be generated like so:
 $ openssl enc -aes-256-ctr -k $(cat /dev/urandom | tr -dc 'a-zA-Z0-9-_@#*()_+{}|:<>?=' | \
   fold -w 1024 | head -n 1) -P -md sha256
 ```
-I would suggest using the 'key" value. Note that token string matching IS case sensitive.
+I would suggest using the 'key' value. Note that token string matching IS case sensitive.
 
 ## Usage:
 
