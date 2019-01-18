@@ -4,11 +4,11 @@ This service application is meant for quick, low-volume HTTP testing use GET, HE
 
 Note: This app DOES NOT CURRENTLY SUPPORT SSL, although this may be addressed in future version. Be mindful about leakage of potentially sensitive information during the use of the app.
 
-### Warnings
+## Warnings
 
 This service app is for testing only! Under no cirsumstances should this application be left facing the public Internet or any other uncontrolled network without appropriate supervision and additional layers of protection. It should be shutdown immedaitely after testing is completed.
 
-### Prerequisites
+## Prerequisites
 
 This application requires only Python 2.7.x and uses only built-in modules and libraries.
 
@@ -27,37 +27,35 @@ Once cloned, you may edit '' and update the following variable to suit your use 
 
 A simple token can be generated like so:
 ```
-$ openssl enc -aes-256-ctr -k $(cat /dev/urandom | tr -dc 'a-zA-Z0-9-_@#*()_+{}|:<>?=' | fold -w 1024 | head -n 1) -P -md sha256
+$ openssl enc -aes-256-ctr -k $(cat /dev/urandom | tr -dc 'a-zA-Z0-9-_@#*()_+{}|:<>?=' | \
+  fold -w 1024 | head -n 1) -P -md sha256
 ```
 I would suggest using the 'key" value. Note that token string matching IS case sensitive.
 
-### Usage:
+## Usage:
 
 For HEAD requests:
 ```
 $ curl --head http://your_fqdn.com[:port_number]/
-
 ```
 
 For GET requests (to serve a default 'index.html' supplied with this appp):
 ```
 $ curl http://your_fqdn.com[:port_number]/
-
 ```
 
 For POST requests (remember to set the 'TOKEN' value):
 ```
-$ curl -H "Content-Type: application/json" -H "X-TOKEN: [token_string]" -X POST -d '{"key":"abc","value":"xyz"}' http://your_fqdn.com[:port_number]
-
+$ curl -H "Content-Type: application/json" -H "X-TOKEN: [token_string]" -X POST \
+  -d '{"key":"abc","value":"xyz"}' http://your_fqdn.com[:port_number]
 ```
 Or...
 ```
-$ curl -H "Content-Type: application/json" -H "X-TOKEN: [token_string]" -X POST -d @filename.json  http://your_fqdn.com[:port_number]
-
+$ curl -H "Content-Type: application/json" -H "X-TOKEN: [token_string]" -X POST \
+  -d @filename.json  http://your_fqdn.com[:port_number]
 ```
 
 POST'd data is assumed to be JSON and will be written to a local file. If other formats are needed, you can edit the source code accordingly.
-
 
 ## Deployment
 
