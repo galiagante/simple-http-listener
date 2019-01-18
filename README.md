@@ -76,9 +76,3 @@ See also the list of [contributors](https://github.com/your/project/contributors
 ## License
 
 This project consists solely of public-domain source code and is therefore free of any ownership or copyright restrictions.
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
