@@ -4,6 +4,8 @@ This service application is meant for quick, low-volume HTTP testing use GET, HE
 
 Note: This app DOES NOT CURRENTLY SUPPORT SSL, although this may be addressed in future versions. Be mindful about leakage of potentially sensitive information during the use of the app. Remember: "When in doubt, don't send it out!"
 
+As a workaround, you can use 'haproxy' as an SSL termination point, feeding to this listener as a backend. This should be sufficient for most purposes.
+
 ## Warnings
 
 This service app is for testing only! Under no cirsumstances should this application be left facing the public Internet or any other uncontrolled network without appropriate supervision and additional layers of protection. It should be shutdown immedaitely after testing is completed.
