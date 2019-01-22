@@ -1,6 +1,6 @@
 # Simple HTTP Listener
 
-This service application is meant for quick, low-volume HTTP testing use GET, HEAD and POST methods. It was originally intended for uses with Github Webhooks as a test end-point, but has numerous other uses.
+This service application is meant for quick, low-volume HTTP testing use GET, HEAD and POST methods. It was originally intended for use with Github Webhooks for end-point testing and data collection, but has numerous other uses.
 
 Note: This app DOES NOT CURRENTLY SUPPORT SSL, although this may be addressed in future versions. A good workaround for this problem is to use 'haproxy' for SSL termination, and pointing at this listener as a 'backend'.
 
