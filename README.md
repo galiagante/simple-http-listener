@@ -12,7 +12,7 @@ This service app is for testing only! Under no cirsumstances should this applica
 
 ## Prerequisites
 
-This application requires only Python 2.7.x and uses only built-in modules and libraries.
+This application requires only Python 2.7.x and uses only built-in modules and libraries, with the exception of 'simplejson'.
 
 ## Getting Started
 
