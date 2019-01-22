@@ -1,19 +1,26 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# silly http listener, version 0.4-20190117-beta (do not distribute)
+# simple http listener, version 0.5-20190122-beta (do not distribute)
 # by rick pelletier (galiagante@gmail.com), jan 2019
 
+# intended primarily for github webhook testing, but can be modified easily for other uses
+# logs are written to stdout but can be redirect elsewhere, as needed
+
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
+import os
 import SocketServer
 import simplejson
 import random
 import datetime
+import hmac
+import hashlib
+import base64
 
 # global server parameters
-ADDR="0.0.0.0" # string: IP or FQDN of your test installation
-PORT=8000 # integer: any port you like. be aware of port conflicts and/or firewall issues
-TOKEN="[change me]" # string: for authenticating POST requests
+ADDR = "0.0.0.0" # string: IP or FQDN of your test installation. '0.0.0.0' means "any interface"
+PORT = 81 # integer: any port you like. be aware of port conflicts and/or firewall issues
+TOKEN = os.environ.get('TOKEN') # string: for authenticating POST requests
 
 # request router(s) and supporting methods
 class S(BaseHTTPRequestHandler):
@@ -32,24 +39,26 @@ class S(BaseHTTPRequestHandler):
 
     def do_POST(self):
         self._set_headers()
+        self.data_string = self.rfile.read(int(self.headers['Content-Length']))
 
-        if 'X-TOKEN' in self.headers:
-            if self.headers['X-TOKEN'] == TOKEN:
-                self.data_string = self.rfile.read(int(self.headers['Content-Length']))
+        if 'X-Hub-Signature' in self.headers:
+            if self.headers['X-Hub-Signature'] == "sha1=" + hmac.new(TOKEN, self.data_string, hashlib.sha1).digest().encode('hex'):
                 self.send_response(200)
                 self.end_headers()
-
-                print "Matching token: " + self.headers['X-TOKEN']
                 data = simplejson.loads(self.data_string)
                 uniq_filename = str(datetime.datetime.now().date()) + '_' + str(datetime.datetime.now().time()).replace(':', '.')
+
                 # POST'd data is expected to be a JSON object
                 with open(uniq_filename + ".json", "w") as outfile:
                     simplejson.dump(data, outfile)
-                print "{}".format(data)
+
+                print "Request accepted: Data written to " + uniq_filename + ".json"
             else:
+                print "Request rejected: Incorrect token"
                 self.send_response(403)
                 self.end_headers()
         else:
+            print "Request rejected: Missing token"
             self.send_response(403)
             self.end_headers()
 

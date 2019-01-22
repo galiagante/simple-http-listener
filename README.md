@@ -2,7 +2,9 @@
 
 This service application is meant for quick, low-volume HTTP testing use GET, HEAD and POST methods. It was originally intended for uses with Github Webhooks as a test end-point, but has numerous other uses.
 
-Note: This app DOES NOT CURRENTLY SUPPORT SSL, although this may be addressed in future versions. Be mindful about leakage of potentially sensitive information during the use of the app. Remember: "When in doubt, don't send it out!"
+Note: This app DOES NOT CURRENTLY SUPPORT SSL, although this may be addressed in future versions. A good workaround for this problem is to use 'haproxy' for SSL termination, and pointing at this listener as a 'backend'.
+
+Regardless, be mindful about leakage of potentially sensitive information during the use of the app. Remember: "When in doubt, don't send it out!"
 
 ## Warnings
 
